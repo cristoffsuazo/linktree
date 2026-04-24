@@ -1,22 +1,282 @@
-body{
-   background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-   color: #fff;
-   font-family: Arial, sans-serif;
-   text-align: center;
-   padding: 40px 20px;
+/* ========================================
+   CRISTOPHER SUAZO — LINKTREE v1.2
+   Aesthetic: Semiformal · Dark Luxury
+   ======================================== */
+
+:root {
+  --bg-deep:    #080c14;
+  --bg-card:    rgba(255,255,255,0.045);
+  --bg-hover:   rgba(255,255,255,0.09);
+  --accent:     #c8a96e;
+  --accent-2:   #7eb8d4;
+  --text-main:  #f0ece4;
+  --text-muted: #8a8f9e;
+  --border:     rgba(200,169,110,0.18);
+  --border-hov: rgba(200,169,110,0.55);
+  --shadow:     0 8px 32px rgba(0,0,0,0.45);
 }
 
-.photo{
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 3px solid #fff;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.link-btn{
-    margin: 10px 0;
-    width: 100%;
-    max-width: 400px;
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---- Ambient background orbs ---- */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+  pointer-events: none;
+  animation: floatOrb 14s ease-in-out infinite alternate;
+}
+.orb-1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, #c8a96e, transparent 70%);
+  top: -100px; left: -120px;
+  animation-duration: 16s;
+}
+.orb-2 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, #7eb8d4, transparent 70%);
+  bottom: -80px; right: -100px;
+  animation-duration: 20s;
+  animation-delay: -6s;
+}
+.orb-3 {
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, #9b6fce, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 24s;
+  animation-delay: -12s;
+}
+
+@keyframes floatOrb {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 40px) scale(1.12); }
+}
+
+/* ---- Main container ---- */
+.container {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Profile section ---- */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.photo-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 4px;
+}
+
+.photo-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+  animation: spinRing 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
+}
+
+.photo {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bg-deep);
+  display: block;
+  z-index: 1;
+}
+
+.name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.tagline {
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  margin-top: 6px;
+}
+
+/* ---- Links nav ---- */
+.links-nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-main);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.link-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(200,169,110,0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.link-card:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hov);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(200,169,110,0.12);
+}
+
+.link-card:hover::before { opacity: 1; }
+
+.link-card:active { transform: translateY(0); }
+
+.link-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(200,169,110,0.1);
+  border: 1px solid rgba(200,169,110,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: background 0.25s, color 0.25s;
+}
+
+.link-card:hover .link-icon {
+  background: rgba(200,169,110,0.2);
+  color: #e8c882;
+}
+
+.link-label {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.link-arrow {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.link-card:hover .link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---- Footer ---- */
+footer {
+  margin-top: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
+}
+
+footer small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  font-weight: 300;
+}
+
+/* ---- Staggered link entrance ---- */
+.link-card:nth-child(1) { animation: fadeUp 0.7s 0.15s cubic-bezier(.22,1,.36,1) both; }
+.link-card:nth-child(2) { animation: fadeUp 0.7s 0.22s cubic-bezier(.22,1,.36,1) both; }
+.link-card:nth-child(3) { animation: fadeUp 0.7s 0.29s cubic-bezier(.22,1,.36,1) both; }
+.link-card:nth-child(4) { animation: fadeUp 0.7s 0.36s cubic-bezier(.22,1,.36,1) both; }
+.link-card:nth-child(5) { animation: fadeUp 0.7s 0.43s cubic-bezier(.22,1,.36,1) both; }
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .name { font-size: 1.75rem; }
+  .link-card { padding: 13px 16px; }
 }
